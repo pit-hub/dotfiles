@@ -1,0 +1,32 @@
+[alias]
+  co = checkout
+  st = status
+  br = branch -a
+  up = fetch origin --tags
+  #upo = fetch origin --tags +refs/heads/*:refs/remotes/origin/*
+  ca = commit --amend
+  ph = push origin HEAD
+
+[color.branch]
+  current = green
+  local = white
+  remote = cyan
+
+[color.status]
+  header = white #(the header text of the status message),
+  added = cyan #(files which are added but not committed)
+  updated = cyan #(files which are added but not committed)
+  changed = yellow #(files which are changed but not added in the index)
+  untracked = magenta #(files which are not tracked by git)
+  branch = green #(the current branch)
+  nobranch = magenta #
+
+[gui]
+  encoding = UTF-8
+
+[core]
+#  autocrlf = true
+  excludesfile = ~/.gitignore_global.txt
+
+[push]
+  default = matching
