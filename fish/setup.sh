@@ -20,8 +20,8 @@ INST_TARGET_ROOT_PATH=~/ # user home folder
 
 [ -f "${INST_SCRIPT_PATH}/fish.install.sh" ] && "${INST_SCRIPT_PATH}/fish.install.sh" \
     || echo "FISH install file not found"
-# [ -f "${INST_SCRIPT_PATH}/fish.config.sh" ] && "${INST_SCRIPT_PATH}/fish.config.sh" \
-#     || echo "FISH config setup file not found"
+[ -f "${INST_SCRIPT_PATH}/fish.config.sh" ] && "${INST_SCRIPT_PATH}/fish.config.sh" \
+    || echo "FISH config setup file not found"
 
 # Execute config sub-config commands
 find \

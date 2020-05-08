@@ -12,6 +12,7 @@ apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
+curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 
 #locale-gen en_US.UTF-8
 #update-locale LANG=en_US.UTF-8
