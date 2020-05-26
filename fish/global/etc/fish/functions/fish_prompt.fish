@@ -1,30 +1,36 @@
 #-----------------------------------------------------------------------
 # https://fishshell.com/docs/current/tutorial.html#prompt
 function fish_prompt --description 'Write out the prompt'
-    set -l last_status $status
-    set -l bg_color normal #000000
-    set -l right_prompt_fg_color 94bac5
+    set last_status $status
+    set bg_color normal #000000
+    set right_prompt_fg_color 94bac5
+
+    #-------------------------------------------------------------------
+    set prompt_char_fg_color 00aaff
+    if test (id -u) -eq 0
+        set prompt_char_fg_color dd6666
+    end
 
     #-------------------------------------------------------------------
     if not test $last_status -eq 0
-        set -l status_fg_color red
+        set status_fg_color red
     else
-        set -l status_fg_color $right_prompt_fg_color
+        set status_fg_color $right_prompt_fg_color
     end
 
     #-------------------------------------------------------------------
     if not set -q __fish_prompt_char
         switch (id -u)
             case 0
-                set __fish_prompt_char ' # '
+                set __fish_prompt_char '# '
             case '*'
-            set __fish_prompt_char ' ➤ '
+                set __fish_prompt_char '➤ '
         end
     end
 
     #-------------------------------------------------------------------
     # user
-    set -l left_prompt (fish_prompt_echo_color -b $bg_color -o ffff00 (whoami))
+    set left_prompt (fish_prompt_echo_color -b $bg_color -o ffff00 (whoami))
 
     # @(at) sign
     fish_prompt_append left_prompt (fish_prompt_echo_color -b $bg_color 99aaaa '@')
@@ -41,7 +47,7 @@ function fish_prompt --description 'Write out the prompt'
     fish_prompt_append left_prompt (fish_prompt_echo_color -b $bg_color -o aaff7f (echo $PWD | sed -e "s|^$HOME|~|"))
 
     # git
-    set -l git (__terlar_git_prompt)
+    set git (__terlar_git_prompt)
     if test -n $git
         # Avoid errors from fish_prompt_append when not in git repo
         fish_prompt_append left_prompt (fish_prompt_echo_color -b $bg_color "$git")
@@ -53,31 +59,31 @@ function fish_prompt --description 'Write out the prompt'
     end
 
     # python virtual environment
-    set -l venv (basename "$VIRTUAL_ENV")
+    set venv (basename "$VIRTUAL_ENV")
     if test -n $venv
         fish_prompt_append left_prompt (fish_prompt_echo_color -b $bg_color -o ff5500 " ($venv)")
     end
 
     # if test $CMD_DURATION
     #     # Show duration of the last command in seconds
-    #     set -l cmd_duration_prompt (echo "$CMD_DURATION 1000" | awk '{printf "%.3fs", $1 / $2}')
+    #     set cmd_duration_prompt (echo "$CMD_DURATION 1000" | awk '{printf "%.3fs", $1 / $2}')
     # end
 
     # right prompt
-    set -l status_prompt (fish_prompt_echo_color -b $bg_color -o $status_fg_color $last_status)
-    set -l right_prompt (fish_prompt_echo_color -b $bg_color -o $right_prompt_fg_color\
+    set status_prompt (fish_prompt_echo_color -b $bg_color -o $status_fg_color $last_status)
+    set right_prompt (fish_prompt_echo_color -b $bg_color -o $right_prompt_fg_color\
         (date "+%H%M.%S/%d")" "(basename (tty)) )
 #       "($cmd_duration_prompt) "(date "+%H%M.%S/%d")" "(basename (tty)) )
 
     # spaces
-    set -l left_length (fish_prompt_visual_length $left_prompt)
-    set -l right_length (fish_prompt_visual_length $right_prompt)
-    set -l status_length (fish_prompt_visual_length $status_prompt)
-    set -l spaces_count (math "$COLUMNS -1 - $left_length - $status_length - $right_length - 5")
-    set -l spaces (eval string repeat -n $spaces_count "\" \"" )
+    set left_length (fish_prompt_visual_length $left_prompt)
+    set right_length (fish_prompt_visual_length $right_prompt)
+    set status_length (fish_prompt_visual_length $status_prompt)
+    set spaces_count (math "$COLUMNS -1 - $left_length - $status_length - $right_length - 5")
+    set spaces (eval string repeat -n $spaces_count "\" \"" )
 
-    set -l prompt_line_one (string join " " $left_prompt $spaces $status_prompt " " $right_prompt)
-    set -l prompt_line_two (fish_prompt_echo_color -b $bg_color -o 00aaff $__fish_prompt_char)
+    set prompt_line_one (string join " " $left_prompt $spaces $status_prompt " " $right_prompt)
+    set prompt_line_two (fish_prompt_echo_color -b $bg_color -o $prompt_char_fg_color $__fish_prompt_char)
 
     #-------------------------------------------------------------------
     # display first line
@@ -90,7 +96,7 @@ function fish_prompt --description 'Write out the prompt'
 
     # display second line
     echo # new line
-    echo -n -s $prompt_line_two " "
+    echo -n -s $prompt_line_two
 end
 
 # Help functions
@@ -105,7 +111,7 @@ function fish_prompt_echo_color --description\
     set -l s $argv[-1]
     set -e argv[-1]
     set_color $argv
-    echo -n $s
+    echo -n -s $s
     set_color normal
     #echo
 end
