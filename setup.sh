@@ -3,7 +3,7 @@
 # Find the sript path. If an argument is specified returns the path where the argument file is located.
 function source_lib()
 {
-    #detect script location (current script file ot from parameter)
+    #detect script location (current script file or from parameter)
     local prm_script=${1:-$0}
     # Absolute path to this script, e.g. /home/user/bin/foo.sh
     local SCRIPT=$(readlink -f "${prm_script}")

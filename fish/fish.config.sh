@@ -1,6 +1,4 @@
-#!/usr/bin/env bash
-
-set -e
+#!/usr/bin/env fish
 
 fisher add FabioAntunes/fish-nvm
 fisher add edc/bass
