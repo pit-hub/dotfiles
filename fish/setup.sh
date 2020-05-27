@@ -32,4 +32,8 @@ find \
     -type f -executable -name "setup.sh" \
     -exec '{}' \;
 
+setup_log_info "FISH set as default user shell for '$(id -u -n)'"
+
+usermod --shell /usr/bin/fish $(id -u -n)
+
 setup_log_info "FISH setup.sh done"
