@@ -11,6 +11,38 @@ function script_path()
     echo "${SCRIPT_PATH}"
 }
 
+function setup_log_info()
+{
+  echo "[INF] $*"
+  if [ ! -z "$SETUP_LOG_FILE" ]; then
+    echo "[INF] $*" >> "$SETUP_LOG_FILE"
+  fi
+}
+
+function setup_log_warning()
+{
+  echo "[WRN] $*"
+  if [ ! -z "$SETUP_LOG_FILE" ]; then
+    echo "[WRN] $*" >> "$SETUP_LOG_FILE"
+  fi
+}
+
+function setup_log_error()
+{
+  echo "[ERR] $*"
+  if [ ! -z "$SETUP_LOG_FILE" ]; then
+    echo "[ERR] $*" >> "$SETUP_LOG_FILE"
+  fi
+}
+
+function setup_log_debug()
+{
+  echo "[DBG] $*"
+  if [ ! -z "$SETUP_LOG_FILE" ]; then
+    echo "[DBG] $*" >> "$SETUP_LOG_FILE"
+  fi
+}
+
 function setup_get_distro_id()
 {
   echo "$(source /etc/os-release && echo $ID)"
@@ -18,4 +50,4 @@ function setup_get_distro_id()
 
 export INST_SCRIPT_PATH=$(script_path)
 
-echo "Exec setup for $(basename $INST_SCRIPT_PATH) - $INST_SCRIPT_PATH $*"
+setup_log_info "Exec setup for $(basename $INST_SCRIPT_PATH) - $INST_SCRIPT_PATH $*"

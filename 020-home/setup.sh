@@ -17,6 +17,8 @@ source_lib
 
 INST_TARGET_ROOT_PATH=~/ # user home folder
 
+setup_log_info "Home setup.sh"
+
 # Sync systeme wide configuration files
 #     -r --dry-run \ # Do nothing, for debug and test
 #     -v \ # Verbouse, for debug and test
@@ -26,3 +28,6 @@ rsync -r \
     --exclude-from="${INST_SCRIPT_PATH}/setup.rsync.exclude.txt" \
     "${INST_SCRIPT_PATH}/" \
     "${INST_TARGET_ROOT_PATH}/"
+
+setup_log_info "Home setup.sh done"
+

@@ -11,11 +11,17 @@ function source_lib()
     local SCRIPT_PATH=$(dirname "${SCRIPT}")
 
     [ -f "${SCRIPT_PATH}/setup.lib.sh" ] && . "${SCRIPT_PATH}/setup.lib.sh" \
-        || . "${SCRIPT_PATH}/../setup.lib.sh"
+        || ([ -f "${SCRIPT_PATH}/../setup.lib.sh" ] && . "${SCRIPT_PATH}/../setup.lib.sh") \
+        || true
 }
 source_lib
 
+export SETUP_LOG_FILE="${INST_SCRIPT_PATH}/setup.log"
+env > "${INST_SCRIPT_PATH}/setup.env.log"
+echo "[INF] dotfile main setup started." > "$SETUP_LOG_FILE"
+
 # Execute sub-config commands
+setup_log_info "Execute sub setup.sh"
 find \
     "${INST_SCRIPT_PATH}/" \
     -maxdepth 2 -mindepth 2 \
@@ -30,3 +36,7 @@ find \
 #     "ID=debian") debian/install.sh ;;
 #       *) echo "Unsuported automatic install for this distro!" && return;;
 # esac
+
+setup_log_info "dotfile main setup exiting with code: $?."
+
+exit 0

@@ -17,15 +17,19 @@ source_lib
 
 INST_TARGET_ROOT_PATH=~/ # user home folder
 
-
+setup_log_info "FISH install ..."
 [ -f "${INST_SCRIPT_PATH}/fish.install.sh" ] && "${INST_SCRIPT_PATH}/fish.install.sh" \
     || echo "FISH install file not found"
+setup_log_info "FISH setup ..."
 [ -f "${INST_SCRIPT_PATH}/fish.config.sh" ] && "${INST_SCRIPT_PATH}/fish.config.sh" \
     || echo "FISH config setup file not found"
 
 # Execute config sub-config commands
+setup_log_info "Execute FISH sub setup.sh"
 find \
     "${INST_SCRIPT_PATH}/" \
     -maxdepth 2 -mindepth 2 \
     -type f -executable -name "setup.sh" \
     -exec '{}' \;
+
+setup_log_info "FISH setup.sh done"
