@@ -80,7 +80,11 @@ function fish_prompt --description 'Write out the prompt'
     set right_length (fish_prompt_visual_length $right_prompt)
     set status_length (fish_prompt_visual_length $status_prompt)
     set spaces_count (math "$COLUMNS -1 - $left_length - $status_length - $right_length - 5")
-    set spaces (eval string repeat -n $spaces_count "\" \"" )
+    if test $spaces_count -gt 0
+      set spaces (eval string repeat -n $spaces_count "\" \"" )
+    else
+      set spaces ""
+    end
 
     set prompt_line_one (string join " " $left_prompt $spaces $status_prompt " " $right_prompt)
     set prompt_line_two (fish_prompt_echo_color -b $bg_color -o $prompt_char_fg_color $__fish_prompt_char)
