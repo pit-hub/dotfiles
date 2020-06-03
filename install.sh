@@ -8,7 +8,7 @@ function source_lib()
     # Absolute path to this script, e.g. /home/user/bin/foo.sh
     local SCRIPT=$(readlink -f "${prm_script}")
     # Absolute path this script is in, thus /home/user/bin
-    SCRIPT_PATH=$(dirname "${SCRIPT}")
+    local SCRIPT_PATH=$(dirname "${SCRIPT}")
 
     [ -f "${SCRIPT_PATH}/setup.lib.sh" ] && . "${SCRIPT_PATH}/setup.lib.sh" \
         || ([ -f "${SCRIPT_PATH}/../setup.lib.sh" ] && . "${SCRIPT_PATH}/../setup.lib.sh") \
@@ -21,8 +21,8 @@ source_lib
 
 setup_log_info "Execution a configuration script: setup.sh"
 
-[ -f "~/dotfiles-dev/setup.sh" ] && . "~/dotfiles-dev/setup.sh" \
-    || ([ -f "${SCRIPT_PATH}/setup.sh" ] && "${SCRIPT_PATH}/setup.sh") \
-    || (setup_log_error "A setup.sh not found in '~/dotfiles-dev' or '${SCRIPT_PATH}'")
+[ -f "${HOME}/dotfiles-dev/setup.sh" ] && "${HOME}/dotfiles-dev/setup.sh" \
+    || ([ -f "${INST_SCRIPT_PATH}/setup.sh" ] && "${INST_SCRIPT_PATH}/setup.sh") \
+    || (setup_log_error "A setup.sh not found in '~/dotfiles-dev' or '${INST_SCRIPT_PATH}'")
 
 exit 0
