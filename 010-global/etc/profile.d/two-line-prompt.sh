@@ -11,6 +11,7 @@ GREEN="\[\033[01;32m\]"
 GREEN_DIM="\[\033[32;2m\]"
 BLUE="\[\033[01;34m\]"
 YELLOW="\[\033[0;33m\]"
+YELLOW_DIM="\[\033[33;2m\]"
 MAG_PURPLE="\[\033[0;35m\]"
 CYAN="\[\033[0;36m\]"
 
@@ -31,16 +32,16 @@ function __prompt_extras {
     if [[ "`git rev-parse --is-inside-work-tree 1>/dev/null 2>/dev/null && echo 0 || echo 1`" == 0 ]]
     then
       local ref=$(git symbolic-ref HEAD 2> /dev/null)
-      PS_BRANCH="(${ref#refs/heads/})"
+      local PS_BRANCH="${ref#refs/heads/}"
+      local PS_GIT="${RESET}${YELLOW_DIM}|${YELLOW}${PS_BRANCH}${RESET}"
     fi
   fi
 
 
   local PS_INFO="${RESET}${GREEN}\u${RESET}${GREEN_DIM}@${RESET}${GREEN}\h${RESET}:${BLUE}\w"
-  local PS_GIT="${RESET}${YELLOW}${PS_BRANCH}${RESET}"
   local PS_TIME="\[\033[\$((COLUMNS-10))G\] ${RESET}${TIME_COLOR}[\t]"
 
-  PS1="${PS_FILL}\[\033[0G\]${PS_INFO} ${PS_GIT}${PS_TIME}\n${RESET}"'\$ '
+  PS1="${RESET}${WHITE_DIM}${PS_FILL}\[\033[0G\]${PS_INFO}${PS_GIT}${PS_TIME}\n${RESET}"'\$ '
 }
 
 tty -s && PROMPT_COMMAND=__prompt_extras || true
