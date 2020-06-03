@@ -11,23 +11,18 @@ function source_lib()
     SCRIPT_PATH=$(dirname "${SCRIPT}")
 
     [ -f "${SCRIPT_PATH}/setup.lib.sh" ] && . "${SCRIPT_PATH}/setup.lib.sh" \
-        || . "${SCRIPT_PATH}/../setup.lib.sh"
+        || ([ -f "${SCRIPT_PATH}/../setup.lib.sh" ] && . "${SCRIPT_PATH}/../setup.lib.sh") \
+        || true
 }
 source_lib
 
-INST_TARGET_ROOT_PATH=~ # user home folder
+# If '~/dotfiles-dev/setup.sh' is found run it instead of cuurent dir setup.sh
+# Used in development and testing.
 
-setup_log_info "Home setup.sh"
+setup_log_info "Execution a configuration script: setup.sh"
 
-# Sync systeme wide configuration files
-#     -r --dry-run \ # Do nothing, for debug and test
-#     -v \ # Verbouse, for debug and test
-rsync -r \
-    --chown=root:root \
-    --chmod=u=rw,go=r \
-    --exclude-from="${INST_SCRIPT_PATH}/setup.rsync.exclude.txt" \
-    "${INST_SCRIPT_PATH}/" \
-    "${INST_TARGET_ROOT_PATH}/"
+[ -f "~/dotfiles-dev/setup.sh" ] && . "~/dotfiles-dev/setup.sh" \
+    || ([ -f "${SCRIPT_PATH}/setup.sh" ] && "${SCRIPT_PATH}/setup.sh") \
+    || (setup_log_error "A setup.sh not found in '~/dotfiles-dev' or '${SCRIPT_PATH}'")
 
-setup_log_info "Home setup.sh done"
-
+exit 0

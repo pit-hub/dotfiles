@@ -7,6 +7,6 @@ if status --is-login #--is-interactive
     end
 end
 
-function on_exit --on-event fish_exit
-    echo fish is now exiting
-end
+# function on_exit --on-event fish_exit
+#     echo fish is now exiting
+# end

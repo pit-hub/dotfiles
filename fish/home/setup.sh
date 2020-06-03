@@ -11,23 +11,26 @@ function source_lib()
     SCRIPT_PATH=$(dirname "${SCRIPT}")
 
     [ -f "${SCRIPT_PATH}/setup.lib.sh" ] && . "${SCRIPT_PATH}/setup.lib.sh" \
-        || . "${SCRIPT_PATH}/../setup.lib.sh"
+        || [ -f "${SCRIPT_PATH}/../setup.lib.sh" ] && . "${SCRIPT_PATH}/../setup.lib.sh" \
+        || . "${SCRIPT_PATH}/../../setup.lib.sh"
 }
 source_lib
 
 INST_TARGET_ROOT_PATH=~ # user home folder
 
-setup_log_info "Home setup.sh"
+setup_log_info "FISH Home setup.sh"
 
 # Sync systeme wide configuration files
 #     -r --dry-run \ # Do nothing, for debug and test
 #     -v \ # Verbouse, for debug and test
+shopt -s dotglob
 rsync -r \
     --chown=root:root \
     --chmod=u=rw,go=r \
     --exclude-from="${INST_SCRIPT_PATH}/setup.rsync.exclude.txt" \
     "${INST_SCRIPT_PATH}/" \
     "${INST_TARGET_ROOT_PATH}/"
+shopt -u dotglob
 
 setup_log_info "Home setup.sh done"
 

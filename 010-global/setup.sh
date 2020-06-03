@@ -8,7 +8,7 @@ function source_lib()
     # Absolute path to this script, e.g. /home/user/bin/foo.sh
     local SCRIPT=$(readlink -f "${prm_script}")
     # Absolute path this script is in, thus /home/user/bin
-    local SCRIPT_PATH=$(dirname "${SCRIPT}")
+    SCRIPT_PATH=$(dirname "${SCRIPT}")
 
     [ -f "${SCRIPT_PATH}/setup.lib.sh" ] && . "${SCRIPT_PATH}/setup.lib.sh" \
         || . "${SCRIPT_PATH}/../setup.lib.sh"

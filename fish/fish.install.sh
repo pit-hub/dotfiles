@@ -10,13 +10,16 @@ function fish_install_get_distro_id()
 function fish_install_debian()
 {
   # Avoid warnings by switching to noninteractive
-  DEBIAN_FRONTEND=noninteractive
+  local DEBIAN_FRONTEND_BAK=${DEBIAN_FRONTEND}
+  export DEBIAN_FRONTEND=noninteractive
 
   apt-get update \
     && apt-get -y install fish 2>&1 \
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
+
+  export DEBIAN_FRONTEND=${DEBIAN_FRONTEND_BAK}
 }
 
 function fish_install_alpine()
@@ -48,8 +51,3 @@ case $(fish_install_get_distro_id) in
   ;;
 esac
 
-# Install fish package manager
-curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
-
-#locale-gen en_US.UTF-8
-#update-locale LANG=en_US.UTF-8

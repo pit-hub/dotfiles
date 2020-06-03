@@ -8,7 +8,7 @@ function source_lib()
     # Absolute path to this script, e.g. /home/user/bin/foo.sh
     local SCRIPT=$(readlink -f "${prm_script}")
     # Absolute path this script is in, thus /home/user/bin
-    local SCRIPT_PATH=$(dirname "${SCRIPT}")
+    SCRIPT_PATH=$(dirname "${SCRIPT}")
 
     [ -f "${SCRIPT_PATH}/setup.lib.sh" ] && . "${SCRIPT_PATH}/setup.lib.sh" \
         || [ -f "${SCRIPT_PATH}/../setup.lib.sh" ] && . "${SCRIPT_PATH}/../setup.lib.sh" \
@@ -28,6 +28,6 @@ rsync -r \
     --chmod=u=rw,go=r \
     --exclude-from="${INST_SCRIPT_PATH}/setup.rsync.exclude.txt" \
     "${INST_SCRIPT_PATH}/" \
-    "${INST_TARGET_ROOT_PATH}/"
+    "${INST_TARGET_ROOT_PATH}"
 
 setup_log_info "FISH global setup.sh done"
