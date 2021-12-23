@@ -15,10 +15,10 @@ function source_lib()
 }
 source_lib
 
-INST_TARGET_ROOT_PATH=$( getent passwd "$USER" | cut -d: -f6 )/ # user home folder
+INST_TARGET_ROOT_PATH=$( getent passwd "${SUDO_USER:-$USER}" | cut -d: -f6 )/ # user home folder
 
 setup_log_info "FISH install ..."
-[ ! -d /etc/fish ] && echo "FISH already installd" \
+[ -d /etc/fish ] && echo "FISH already installd" \
   || ( [ -f "${INST_SCRIPT_PATH}/fish.install.sh" ] && "${INST_SCRIPT_PATH}/fish.install.sh" \
          || echo "FISH install file not found" )
 
@@ -30,8 +30,8 @@ find \
     -type f -executable -name "setup.sh" \
     -exec '{}' \;
 
-setup_log_info "FISH set as default user shell for '$(id -u -n $USER)'"
+setup_log_info "FISH set as default user shell for '$(id -u -n ${SUDO_USER:-$USER})'"
 
-usermod --shell /usr/bin/fish $(id -u -n $USER)
+usermod --shell /usr/bin/fish $(id -u -n ${SUDO_USER:-$USER})
 
 setup_log_info "FISH setup.sh done"
