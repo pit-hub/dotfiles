@@ -15,11 +15,12 @@ function source_lib()
 }
 source_lib
 
-INST_TARGET_ROOT_PATH=~/ # user home folder
+INST_TARGET_ROOT_PATH=$( getent passwd "$USER" | cut -d: -f6 )/ # user home folder
 
 setup_log_info "FISH install ..."
-[ -f "${INST_SCRIPT_PATH}/fish.install.sh" ] && "${INST_SCRIPT_PATH}/fish.install.sh" \
-    || echo "FISH install file not found"
+[ ! -d /etc/fish ] && echo "FISH already installd" \
+  || ( [ -f "${INST_SCRIPT_PATH}/fish.install.sh" ] && "${INST_SCRIPT_PATH}/fish.install.sh" \
+         || echo "FISH install file not found" )
 
 # Execute config sub-config commands
 setup_log_info "Execute FISH sub setup.sh"
@@ -29,8 +30,8 @@ find \
     -type f -executable -name "setup.sh" \
     -exec '{}' \;
 
-setup_log_info "FISH set as default user shell for '$(id -u -n)'"
+setup_log_info "FISH set as default user shell for '$(id -u -n $USER)'"
 
-usermod --shell /usr/bin/fish $(id -u -n)
+usermod --shell /usr/bin/fish $(id -u -n $USER)
 
 setup_log_info "FISH setup.sh done"
