@@ -51,11 +51,11 @@ function fish_prompt --description 'Write out the prompt'
     if test -n $git
         # Avoid errors from fish_prompt_append when not in git repo
         fish_prompt_append left_prompt (fish_prompt_echo_color -b $bg_color "$git")
-    end
 
-    # check for gwip; does last commit log contain --wip--?
-    if begin; git log -n 1 ^/dev/null | grep -qc "\-\-wip\-\-"; end
-        fish_prompt_append left_prompt (fish_prompt_echo_color -b $bg_color -f ffffff " WIP!")
+        # check for gwip; does last commit log contain --wip--?
+        if begin; git log -n 1 2>/dev/null | grep -qc "\-\-wip\-\-"; end
+            fish_prompt_append left_prompt (fish_prompt_echo_color -b $bg_color -f ffffff " WIP!")
+        end
     end
 
     # python virtual environment
