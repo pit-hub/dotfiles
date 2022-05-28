@@ -21,6 +21,18 @@ function __prompt_extras {
   local PS_FILL=${PS_LINE:0:$COLUMNS}
   local TIME_COLOR=$WHITE_DIM
   local PS_BRANCH=''
+  local PS_HOST="\h"
+
+  if [ ! -z "${ACC_CLOUD}" ] ; then
+    # PS_HOST="Azure"
+    PS_HOST=$(jq --raw-output \
+        '.subscriptions[] | select(.isDefault == true) | (.name)' \
+        "$HOME/.azure/azureProfile.json" 2>/dev/null || echo "Azure" \
+      )
+  fi
+  if [ ! -z "${CODESPACES}" ] ; then
+    PS_HOST="cs"
+  fi
 
   if [ $EXIT != 0 ]
   then
@@ -38,11 +50,10 @@ function __prompt_extras {
   fi
 
 
-  local PS_INFO="${RESET}${GREEN}\u${RESET}${GREEN_DIM}@${RESET}${GREEN}\h${RESET}:${BLUE}\w"
+  local PS_INFO="${RESET}${GREEN}\u${RESET}${GREEN_DIM}@${RESET}${GREEN}${PS_HOST}${RESET}:${BLUE}\w"
   local PS_TIME="\[\033[\$((COLUMNS-10))G\] ${RESET}${TIME_COLOR}[\t]"
 
   PS1="${RESET}${WHITE_DIM}${PS_FILL}\[\033[0G\]${PS_INFO}${PS_GIT}${PS_TIME}\n${RESET}"'\$ '
 }
 
 tty -s && PROMPT_COMMAND=__prompt_extras || true
-
