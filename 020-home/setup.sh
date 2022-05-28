@@ -15,7 +15,7 @@ function source_lib()
 }
 source_lib
 
-INST_TARGET_ROOT_PATH=$( getent passwd "${SUDO_USER:-$USER}" | cut -d: -f6 ) # user home folder
+INST_TARGET_ROOT_PATH=$(target_home) # user home folder
 
 setup_log_info "Home setup.sh"
 

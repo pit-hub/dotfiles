@@ -11,6 +11,21 @@ function script_path()
     echo "${SCRIPT_PATH}"
 }
 
+function target_home()
+{
+    local TARGET_HOME_PATH=$( getent passwd "${SUDO_USER:-$USER}" | cut -d: -f6 ) # user home folder
+
+    if [ -z "${TARGET_HOME_PATH}" ] ; then
+        TARGET_HOME_PATH="${HOME}"
+    fi
+
+    if [ -z "${TARGET_HOME_PATH}" ] ; then
+        TARGET_HOME_PATH="~"
+    fi
+
+    echo "${TARGET_HOME_PATH}"
+}
+
 function setup_log_info()
 {
   echo "[INF] $*"
