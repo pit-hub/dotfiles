@@ -37,7 +37,18 @@ function fish_prompt --description 'Write out the prompt'
 
     # host
     # set __fish_prompt_hostname (hostname|cut -d . -f 1)
-    fish_prompt_append left_prompt (fish_prompt_echo_color -b $bg_color -o aa7744 (hostname -s))
+    if set -q ACC_CLOUD; and type -q jq; and test -f "$HOME/.azure/azureProfile.json"
+        set prompt_hostname (
+            jq --raw-output \
+              '.subscriptions[] | select(.isDefault == true) | (.name)' \
+              "$HOME/.azure/azureProfile.json" 2>/dev/null || echo "Azure" \
+        )
+    else if set -q CODESPACES
+        set prompt_hostname "cs"
+    else
+        set prompt_hostname (hostname -s)
+    end
+    fish_prompt_append left_prompt (fish_prompt_echo_color -b $bg_color -o aa7744 $prompt_hostname)
 
     # colon
     fish_prompt_append left_prompt (fish_prompt_echo_color -b $bg_color -o 99aaaa ':')
