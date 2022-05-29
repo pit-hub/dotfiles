@@ -38,11 +38,13 @@ function fish_prompt --description 'Write out the prompt'
     # host
     # set __fish_prompt_hostname (hostname|cut -d . -f 1)
     if set -q ACC_CLOUD; and type -q jq; and test -f "$HOME/.azure/azureProfile.json"
-        set prompt_hostname (
+        set prompt_hostname ( \
             jq --raw-output \
-              '.subscriptions[] | select(.isDefault == true) | (.name)' \
-              "$HOME/.azure/azureProfile.json" 2>/dev/null || echo "Azure" \
+            '.subscriptions[] | select(.isDefault == true) | (.name)' \
+            "$HOME/.azure/azureProfile.json" 2>/dev/null || echo "Azure" \
         )
+    else if set -q ACC_CLOUD
+        set prompt_hostname "Azure"
     else if set -q CODESPACES
         set prompt_hostname "cs"
     else
