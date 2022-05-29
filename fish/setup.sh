@@ -18,7 +18,7 @@ source_lib
 INST_TARGET_ROOT_PATH=$(target_home) # user home folder
 
 setup_log_info "FISH install ..."
-[ -d /etc/fish ] && echo "FISH already installd" \
+[ -f /usr/bin/fish ] && echo "FISH already installd" \
   || ( [ -f "${INST_SCRIPT_PATH}/fish.install.sh" ] && "${INST_SCRIPT_PATH}/fish.install.sh" \
          || echo "FISH install file not found" )
 

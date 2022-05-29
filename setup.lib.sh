@@ -13,7 +13,7 @@ function script_path()
 
 function target_home()
 {
-    local TARGET_HOME_PATH=$( getent passwd "${SUDO_USER:-$USER}" | cut -d: -f6 ) # user home folder
+    local TARGET_HOME_PATH=$(getent passwd $(id -u -n ${SUDO_USER:-$USER}) | cut -d: -f6) # user home folder
 
     if [ -z "${TARGET_HOME_PATH}" ] ; then
         TARGET_HOME_PATH="${HOME}"
