@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ $UID -ne 0 ]]; then
-    sudo -p 'Restarting as root, password: ' bash $0 "$@"
+    sudo --preserve-env -p 'Restarting as root, password: ' bash $0 "$@"
     exit $?
 fi
 
