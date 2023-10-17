@@ -30,7 +30,8 @@ find \
     -type f -executable -name "setup.sh" \
     -exec '{}' \;
 
-setup_log_info "FISH set as default user shell for '$(id -u -n ${SUDO_USER:-$USER})'"
+# Uncomment to set fish as default shell
+# setup_log_info "FISH set as default user shell for '$(id -u -n ${SUDO_USER:-$USER})'"
 
 usermod --shell /usr/bin/fish $(id -u -n ${SUDO_USER:-$USER})
 
