@@ -22,6 +22,7 @@ function __prompt_extras {
   local TIME_COLOR=$WHITE_DIM
   local PS_BRANCH=''
   local PS_HOST="\h"
+  local PS_AT="@"
 
   if [ ! -z "${ACC_CLOUD}" ] ; then
     # PS_HOST="Azure"
@@ -32,6 +33,10 @@ function __prompt_extras {
   fi
   if [ ! -z "${CODESPACES}" ] ; then
     PS_HOST="cs"
+  fi
+  if [ "${REMOTE_CONTAINERS}" == "true" ] ; then
+    PS_AT=""
+    PS_HOST=""
   fi
 
   if [ $EXIT != 0 ]
@@ -50,7 +55,7 @@ function __prompt_extras {
   fi
 
 
-  local PS_INFO="${RESET}${GREEN}\u${RESET}${GREEN_DIM}@${RESET}${GREEN}${PS_HOST}${RESET}:${BLUE}\w"
+  local PS_INFO="${RESET}${GREEN}\u${RESET}${GREEN_DIM}${PS_AT}${RESET}${GREEN}${PS_HOST}${RESET}:${BLUE}\w"
   local PS_TIME="\[\033[\$((COLUMNS-10))G\] ${RESET}${TIME_COLOR}[\t]"
 
   PS1="${RESET}${WHITE_DIM}${PS_FILL}\[\033[0G\]${PS_INFO}${PS_GIT}${PS_TIME}\n${RESET}"'\$ '
