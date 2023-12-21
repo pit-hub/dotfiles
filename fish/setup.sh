@@ -33,6 +33,6 @@ find \
 # Uncomment to set fish as default shell
 # setup_log_info "FISH set as default user shell for '$(id -u -n ${SUDO_USER:-$USER})'"
 
-usermod --shell /usr/bin/fish $(id -u -n ${SUDO_USER:-$USER})
+# usermod --shell /usr/bin/fish $(id -u -n ${SUDO_USER:-$USER})
 
 setup_log_info "FISH setup.sh done"
