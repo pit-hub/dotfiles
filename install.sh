@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-if [[ $UID -ne 0 ]]; then
-    sudo --preserve-env -p 'Restarting as root, password: ' bash $0 "$@"
-    exit $?
-fi
-
 # Find the sript path. If an argument is specified returns the path where the argument file is located.
 function source_lib()
 {
@@ -24,10 +19,18 @@ source_lib
 # If '~/dotfiles-dev/setup.sh' is found run it instead of cuurent dir setup.sh
 # Used in development and testing.
 
-setup_log_info "Execution a configuration script: setup.sh"
+setup_log_info "Exec install for $(basename $INST_SCRIPT_PATH) - $INST_SCRIPT_PATH $*"
+
+setup_log_info "Execution a configuration script: $0"
+
+setup_log_info "User home: $(target_home)"
 
 [ -f "${HOME}/dotfiles-dev/setup.sh" ] && "${HOME}/dotfiles-dev/setup.sh" \
-    || ([ -f "${INST_SCRIPT_PATH}/setup.sh" ] && "${INST_SCRIPT_PATH}/setup.sh") \
+    || ( [ ! -z "${INST_SCRIPT_PATH}" ] && [ -f "${INST_SCRIPT_PATH}/setup.sh" ] && "${INST_SCRIPT_PATH}/setup.sh") \
     || (setup_log_error "A setup.sh not found in '~/dotfiles-dev' or '${INST_SCRIPT_PATH}'")
+
+[ -f "${HOME}/.gitconfig" ] \
+    && cat "${HOME}/.gitconfig" > ${HOME}/.gitconfig-on-dotfile-install \
+    || true
 
 exit 0

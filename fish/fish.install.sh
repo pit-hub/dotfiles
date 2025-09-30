@@ -2,6 +2,12 @@
 
 set -e
 
+if [[ $UID -ne 0 ]]; then
+    echo "Executing as root: $0 $@"
+    sudo --preserve-env -p 'Restarting as root, password: ' bash $0 $@
+    exit $?
+fi
+
 function fish_install_get_distro_id()
 {
   echo "$(source /etc/os-release && echo $ID)"

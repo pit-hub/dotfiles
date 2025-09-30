@@ -64,5 +64,3 @@ function setup_get_distro_id()
 }
 
 export INST_SCRIPT_PATH=$(script_path)
-
-setup_log_info "Exec setup for $(basename $INST_SCRIPT_PATH) - $INST_SCRIPT_PATH $*"

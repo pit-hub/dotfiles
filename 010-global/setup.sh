@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if [[ $UID -ne 0 ]]; then
+    echo "Executing as root: $0 $@"
+    sudo --preserve-env -p 'Restarting as root, password: ' bash $0 $@
+    exit $?
+fi
+
 # Find the sript path. If an argument is specified returns the path where the argument file is located.
 function source_lib()
 {

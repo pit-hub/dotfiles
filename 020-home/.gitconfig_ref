@@ -3,7 +3,6 @@
   st = status
   br = branch -a
   up = fetch origin --tags
-  #upo = fetch origin --tags +refs/heads/*:refs/remotes/origin/*
   ca = commit --amend
   ph = push origin HEAD
 

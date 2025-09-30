@@ -25,7 +25,7 @@ setup_log_info "FISH Home setup.sh"
 #     -v \ # Verbouse, for debug and test
 shopt -s dotglob
 rsync -r \
-    --chown=${SUDO_USER:-$USER}:${SUDO_GID:-$(id -g ${SUDO_USER:-$USER})} \
+    `# --chown=${SUDO_USER:-$USER}:${SUDO_GID:-$(id -g ${SUDO_USER:-$USER})}` \
     --chmod=u=rw,go=r \
     --exclude-from="${INST_SCRIPT_PATH}/setup.rsync.exclude.txt" \
     "${INST_SCRIPT_PATH}/" \
@@ -33,5 +33,3 @@ rsync -r \
 shopt -u dotglob
 
 setup_log_info "Home setup.sh done"
-
-${SUDO_USER:-$USER}:${SUDO_GID:-$(id -g)}
