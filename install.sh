@@ -26,11 +26,10 @@ setup_log_info "Execution a configuration script: $0"
 setup_log_info "User home: $(target_home)"
 
 [ -f "${HOME}/dotfiles-dev/setup.sh" ] && "${HOME}/dotfiles-dev/setup.sh" \
-    || ( [ ! -z "${INST_SCRIPT_PATH}" ] && [ -f "${INST_SCRIPT_PATH}/setup.sh" ] && "${INST_SCRIPT_PATH}/setup.sh") \
     || (setup_log_error "A setup.sh not found in '~/dotfiles-dev' or '${INST_SCRIPT_PATH}'")
 
 [ -f "${HOME}/.gitconfig" ] \
     && cat "${HOME}/.gitconfig" > ${HOME}/.gitconfig-on-dotfile-install \
-    || true
+    || echo "# git config file notfound: ${HOME}/.gitconfig" > ${HOME}/.gitconfig-on-dotfile-install
 
 exit 0

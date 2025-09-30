@@ -5,4 +5,5 @@ alias la='ls -A'
 alias l='ls -CF'
 
 alias d='docker'
-alias k='minicube'
+alias k='kubectl'
+alias kz='kustomize'
