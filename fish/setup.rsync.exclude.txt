@@ -1,2 +1,3 @@
 setup.sh
+setup.exclude.txt
 setup.rsync.exclude.txt

@@ -28,9 +28,9 @@ setup_log_info "FISH install ..."
 # Execute config sub-config commands
 setup_log_info "Execute FISH sub setup.sh"
 find \
-    "${INST_SCRIPT_PATH}/" \
+    "${INST_SCRIPT_PATH}" \
     -maxdepth 2 -mindepth 2 \
-    --exclude-from="${INST_SCRIPT_PATH}/setup.rsync.exclude.txt" \
+    $(printf -- '-not -path */%s/* ' $(cat "${INST_SCRIPT_PATH}/setup.exclude.txt")) \
     -type f -executable -name "setup.sh" \
     -exec '{}' \;
 

@@ -30,7 +30,7 @@ setup_log_info "Global setup.sh"
 #     -v \ # Verbouse, for debug and test
 rsync -r \
     --chown=root:root \
-    --chmod=u=rw,go=r \
+    --chmod=u+rwX,go-w \
     --exclude-from="${INST_SCRIPT_PATH}/setup.rsync.exclude.txt" \
     "${INST_SCRIPT_PATH}/" \
     "${INST_TARGET_ROOT_PATH}/"

@@ -24,7 +24,7 @@ setup_log_info "Home setup.sh"
 #     -v \ # Verbouse, for debug and test
 rsync -r \
     `# --chown=${SUDO_USER:-$USER}:${SUDO_GID:-$(id -g ${SUDO_USER:-$USER})}` \
-    --chmod=u=rw,go=r \
+    --chmod=u+rwX,go-w \
     --exclude-from="${INST_SCRIPT_PATH}/setup.rsync.exclude.txt" \
     "${INST_SCRIPT_PATH}/" \
     "${INST_TARGET_ROOT_PATH}/"

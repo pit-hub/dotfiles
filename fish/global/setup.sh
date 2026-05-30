@@ -31,7 +31,7 @@ setup_log_info "FISH global setup.sh"
     # -v \ # Verbouse, for debug and test
 rsync -r \
     --chown=root:root \
-    --chmod=u=rwx,go=rx \
+    --chmod=u+rwx,go+rx \
     --exclude-from="${INST_SCRIPT_PATH}/setup.rsync.exclude.txt" \
     "${INST_SCRIPT_PATH}/" \
     "${INST_TARGET_ROOT_PATH}"
