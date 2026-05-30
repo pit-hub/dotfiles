@@ -21,13 +21,7 @@ env > "${INST_SCRIPT_PATH}/setup.env.log"
 echo "[INF] dotfile main setup started." > "$SETUP_LOG_FILE"
 
 # Execute sub-config commands
-setup_log_info "Execute sub setup.sh"
-find \
-    "${INST_SCRIPT_PATH}" \
-    -maxdepth 2 -mindepth 2 \
-    $(printf -- '-not -path */%s/* ' $(cat "${INST_SCRIPT_PATH}/setup.exclude.txt")) \
-    -type f -executable -name "setup.sh" \
-    -exec '{}' \;
+setup_exec_children
 
 # find "${INST_SCRIPT_PATH}/" -maxdepth 1 -mindepth 1 -type d -not -wholename "*/.git*" | while read setup_dir; do
 #     echo $setup_dir

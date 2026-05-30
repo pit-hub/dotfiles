@@ -25,14 +25,8 @@ setup_log_info "FISH install ..."
   || ( [ -f "${INST_SCRIPT_PATH}/fish.install.sh" ] && "${INST_SCRIPT_PATH}/fish.install.sh" \
          || echo "FISH install file not found" )
 
-# Execute config sub-config commands
-setup_log_info "Execute FISH sub setup.sh"
-find \
-    "${INST_SCRIPT_PATH}" \
-    -maxdepth 2 -mindepth 2 \
-    $(printf -- '-not -path */%s/* ' $(cat "${INST_SCRIPT_PATH}/setup.exclude.txt")) \
-    -type f -executable -name "setup.sh" \
-    -exec '{}' \;
+# Execute sub-config commands
+setup_exec_children
 
 # Uncomment to set fish as default shell
 # setup_log_info "FISH set as default user shell for '$(id -u -n ${SUDO_USER:-$USER})'"

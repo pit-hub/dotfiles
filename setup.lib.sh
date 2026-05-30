@@ -63,4 +63,15 @@ function setup_get_distro_id()
   echo "$(source /etc/os-release && echo $ID)"
 }
 
+function setup_exec_children()
+{
+  setup_log_info "Execute children setup.sh"
+  find \
+    "${INST_SCRIPT_PATH}" \
+    -maxdepth 2 -mindepth 2 \
+    $(printf -- '-not -path */%s/* ' $(cat "${INST_SCRIPT_PATH}/setup.exclude.txt")) \
+    -type f -executable -name "setup.sh" \
+    -exec '{}' \;
+}
+
 export INST_SCRIPT_PATH=$(script_path)
